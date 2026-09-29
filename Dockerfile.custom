@@ -1,0 +1,9 @@
+# Dockerfile au nom volontairement non standard, pour tester le mode
+# "J'ai déjà mon propre Dockerfile" avec un chemin personnalisé
+# (renseigner "Dockerfile.custom" dans le champ prévu à cet effet).
+FROM python:3.12-slim
+WORKDIR /app
+RUN pip install --no-cache-dir fastapi uvicorn
+RUN echo 'from fastapi import FastAPI\napp = FastAPI()\n@app.get("/")\ndef r(): return {"ok": True, "source": "Dockerfile.custom"}' > main.py
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
